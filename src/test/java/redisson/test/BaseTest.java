@@ -13,13 +13,21 @@ public abstract class BaseTest {
     protected RedissonReactiveClient client;
 
     @BeforeAll
-    public void setClient(){
+    protected void setClient(){
         this.client = this.redissonConfig.getReactiveClient();
     }
 
     @AfterAll
-    public void shutdownClient(){
+    protected void shutdownClient(){
         this.client.shutdown();
+    }
+
+    protected void sleep(long millis){
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
