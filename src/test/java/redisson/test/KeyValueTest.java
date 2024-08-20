@@ -1,6 +1,5 @@
 package redisson.test;
 
-
 import org.redisson.client.codec.StringCodec;
 import reactor.core.publisher.Mono;
 import org.junit.jupiter.api.Test;
