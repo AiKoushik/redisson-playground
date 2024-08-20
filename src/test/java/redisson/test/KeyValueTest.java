@@ -38,11 +38,18 @@ public class KeyValueTest extends BaseTest {
 
     @Test
     public void keyValueExtendExpiryTest() {
-        keyValueExpiryTest();
+        //keyValueExpiryTest();
+        RBucketReactive<String> bucket = this.client.getBucket("user:1:name", StringCodec.INSTANCE);
+        Mono<Void> set = bucket.set("Sam", 10, TimeUnit.SECONDS);
+        Mono<Void> get = bucket.get()
+                .doOnNext(System.out::println)
+                .then();
+
+        StepVerifier.create(set.concatWith(get))
+                .verifyComplete();
 
         sleep(5000);
 
-        RBucketReactive<String> bucket = this.client.getBucket("user:1:name", StringCodec.INSTANCE);
         Mono<Boolean> mono = bucket.expire(60, TimeUnit.SECONDS);
 
         StepVerifier.create(mono)
