@@ -16,6 +16,7 @@ public class NumberTest extends BaseTest {
         Mono<Void> mono = Flux.range(1, 30)
                 .delayElements(Duration.ofSeconds(1))
                 .flatMap(i -> atomicLong.incrementAndGet())
+                .doOnNext(System.out::println)
                 .then();
 
         StepVerifier.create(mono)
