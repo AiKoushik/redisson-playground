@@ -1,29 +1,30 @@
 package redisson.test;
 
 import org.junit.jupiter.api.Test;
-import org.redisson.api.RQueueReactive;
+import org.redisson.api.RDequeReactive;
 import org.redisson.client.codec.LongCodec;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-public class QueueTest extends BaseTest {
-    @Test
-    public void testQueue() {
-        //To pass test of queue size, clear this variable in Redis before running
-        RQueueReactive<Object> queue = this.client.getQueue("number-queue", LongCodec.INSTANCE);
+public class StackTest extends BaseTest {
 
-        Mono<Void> queueAdd = Flux.range(1, 10)
+    @Test
+    public void testStack() {
+        //To pass test of deque size, clear this variable in Redis before running
+        RDequeReactive<Object> deque = this.client.getDeque("number-stack", LongCodec.INSTANCE);
+
+        Mono<Void> dequeAdd = Flux.range(1, 10)
                 .map(Long::valueOf)
-                .flatMap(queue::add)
+                .flatMap(deque::add)
                 .then();
 
-        StepVerifier.create(queueAdd)
+        StepVerifier.create(dequeAdd)
                 .verifyComplete();
 
         sleep(10000);
 
-        Mono<Void> queuePoll = queue.poll()
+        Mono<Void> queuePoll = deque.pollLast()
                 .repeat(3)  //total 4 times
                 .doOnNext(System.out::println)
                 .then();
@@ -31,7 +32,7 @@ public class QueueTest extends BaseTest {
         StepVerifier.create(queuePoll)
                 .verifyComplete();
 
-        StepVerifier.create(queue.size())
+        StepVerifier.create(deque.size())
                 .expectNext(6)
                 .verifyComplete();
     }

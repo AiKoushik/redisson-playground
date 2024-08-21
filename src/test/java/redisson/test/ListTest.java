@@ -15,7 +15,7 @@ public class ListTest extends BaseTest{
 
     @Test
     public void testList(){
-        //To pass test of size 10, clear this variable in Redis before running
+        //To pass test of list size, clear this variable in Redis before running
         RListReactive<Object> list = this.client.getList("number-input", LongCodec.INSTANCE);
 
         Mono<Void> listAdd = Flux.range(1, 10)
@@ -33,7 +33,7 @@ public class ListTest extends BaseTest{
 
     @Test
     public void testListSync(){
-        //To pass test of size 10, clear this variable in Redis before running
+        //To pass test of list size, clear this variable in Redis before running
         RListReactive<Object> list = this.client.getList("number-input-sync", LongCodec.INSTANCE);
 
         List<Long> longList = LongStream.range(1, 11)
