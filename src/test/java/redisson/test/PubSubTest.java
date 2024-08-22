@@ -35,7 +35,7 @@ public class PubSubTest extends BaseTest {
     }
 
     @Test
-    public void patterSubscriber() {
+    public void patternSubscriber() {
         RPatternTopicReactive patternTopic = this.client.getPatternTopic("chat-room:*", StringCodec.INSTANCE);
 
         patternTopic.addListener(String.class, new PatternMessageListener<String>() {
@@ -47,6 +47,5 @@ public class PubSubTest extends BaseTest {
 
         sleep(120_000);
     }
-
 
 }
