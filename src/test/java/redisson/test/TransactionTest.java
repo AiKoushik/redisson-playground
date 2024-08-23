@@ -14,7 +14,6 @@ public class TransactionTest extends BaseTest {
     private RBucketReactive<Long> user1Balance;
     private RBucketReactive<Long> user2Balance;
 
-
     @BeforeAll
     public void setUpAccounts() {
         this.user1Balance = this.client.getBucket("user:1:balance", LongCodec.INSTANCE);
