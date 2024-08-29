@@ -8,7 +8,7 @@ import org.redisson.client.codec.StringCodec;
 
 public class PubSubTest extends BaseTest {
 
-    //In redis-cli execute 'publish "hello world"' command to see the subscribers receive the message
+    //In redis-cli execute 'publish chat-room:sports "hello world"' command to see the subscribers receive the message
 
     @Test
     public void subscriber1() {
